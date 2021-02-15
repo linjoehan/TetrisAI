@@ -15,3 +15,7 @@ Classes
  - Gamstate
  - Gamestate_ai
  - Tetris_player
+ 
+ TODO
+  - Improve AI (Using Genitics to find a better eval)
+  - Design to allow other NES emulators
