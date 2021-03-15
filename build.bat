@@ -1,3 +1,4 @@
+mkdir bin
 set PATH=C:\MinGW\bin;%PATH%
 
 g++.exe ^
