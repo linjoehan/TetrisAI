@@ -15,6 +15,10 @@ Jnes_Interface::Jnes_Interface(std::string jnes_path,std::string jnes_rom)
 {
     current_joy_state = Joystick_state();
     screendata = 0;
+    
+    //ideal button delay to avoid more than one controller update per frame. (1000/60)*2
+    //used when updateing joystick state
+    button_delay = 34;
 }
 
 void Jnes_Interface::init()
@@ -106,6 +110,7 @@ void Jnes_Interface::update_joystick(Joystick_state state)
     }
     
     current_joy_state.bin_state = state.bin_state;
+    Sleep(button_delay);
 }
 
 void Jnes_Interface::KeyboardButtonDown(DWORD a)

@@ -10,7 +10,6 @@ Pixel::Pixel()
 
 Tetris_Player::Tetris_Player()
 : jnes_interface("../emu/Jnes/","../emu/Tetris (U) [!].zip"),
-  button_delay(34),
   player_active(true),
   action_required(false),
   starting_column{{3,5,3,5},{4,4,4,4},{4,4,4,5},{4,4,4,5},{4,4,4,5},{4,5,4,4},{4,5,4,4}}
@@ -86,7 +85,7 @@ void Tetris_Player::start_level_eighteen()
 {
     //Start
     press_button(0b00000100);
-    Sleep(100);
+
     //no music
     press_button(0b01000000);
     press_button(0b01000000);
@@ -94,7 +93,6 @@ void Tetris_Player::start_level_eighteen()
 
     //Start
     press_button(0b00000100);
-    Sleep(100);
     
     //select level
     press_button(0b00010000);
@@ -104,19 +102,14 @@ void Tetris_Player::start_level_eighteen()
     
     //Start with +10
     jnes_interface.update_joystick(0b00000010);
-    Sleep(button_delay);
     jnes_interface.update_joystick(0b00000110);
-    Sleep(button_delay);
     jnes_interface.update_joystick(0b00000000);
-    Sleep(button_delay);
 }
 
 void Tetris_Player::press_button(uint8_t a)
 {
     jnes_interface.update_joystick(a);
-    Sleep(button_delay);
     jnes_interface.update_joystick(0);
-    Sleep(button_delay);
 }
 
 void Tetris_Player::get_gamestate()

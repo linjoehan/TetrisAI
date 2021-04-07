@@ -18,7 +18,6 @@ class Pixel
 class Tetris_Player
 {
     public:
-    int button_delay;
     bool player_active;
     bool action_required;
     

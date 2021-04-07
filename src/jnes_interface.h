@@ -36,6 +36,8 @@ class Jnes_Interface
     DWORD button_key[8];
     void KeyboardButtonDown(DWORD a);
     void KeyboardButtonUp(DWORD a);
+    
+    int button_delay;
 };
 
 #endif
