@@ -12,6 +12,16 @@ Move::Move(int rotation,int column)
     this->column = column;
 }
 
+bool Move::operator==(Move &test)
+{
+    return rotation == test.rotation and column == test.column;
+}
+
+bool Move::operator!=(Move &test)
+{
+    return not(*this == test);
+}
+
 Block::Block()
 {
     Block("            ####");

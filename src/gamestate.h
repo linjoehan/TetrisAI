@@ -14,6 +14,9 @@ class Move
     
     Move();
     Move(int r,int c);
+    
+    bool operator==(Move &test);
+    bool operator!=(Move &test);
 };
 
 class Block

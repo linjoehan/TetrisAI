@@ -30,34 +30,52 @@ void Tetris_Player::play()
         if(action_required)
         {
             Move move = gamestate_ai.get_best_move(gamestate);
-            switch(move.rotation)
+            Move current_move = Move(0,starting_column[gamestate.current_block_number][move.rotation]);
+            
+            while(move != current_move)
             {
-                case 2: press_button(0b00000010);
-                case 1: press_button(0b00000010);
-                        break;
-                case 3: press_button(0b00000001);
-                        break;
-            }
-            
-            int current_column = starting_column[gamestate.current_block_number][move.rotation];
-            
-            while(current_column != move.column)
-            {
-                if(current_column < move.column)
+                uint8_t required_state = 0;
+                
+                /*add in required rotation based on this
+                required rotation   0 1 2 3
+                Current rotation  0 X A A B
+                                  1   X A
+                                  2     X
+                                  3       X
+                Other combinations will not come up */
+                
+                switch(current_move.rotation*4 + move.rotation)
                 {
-                    press_button(0b00010000);
-                    current_column++;
+                   case 1:
+                   case 2:
+                   case 6:
+                   {
+                       required_state |= 0b00000010;
+                       current_move.rotation++;
+                   }break;
+                   case 3:
+                   {
+                       required_state |= 0b00000001;
+                       current_move.rotation += 3;
+                   }break;
                 }
-                else
+                
+                //now the move direction
+                if(current_move.column < move.column)
                 {
-                    press_button(0b00100000);
-                    current_column--;
+                    required_state |= 0b00010000;
+                    current_move.column++;
                 }
+                else if(current_move.column > move.column)
+                {
+                    required_state |= 0b00100000;
+                    current_move.column--;
+                }
+                
+                //update the controller state
+                jnes_interface.update_joystick(required_state);
+                jnes_interface.update_joystick(0);
             }
-            
-            //Gamestate teststate = gamestate;
-            //teststate.make_move(move);
-            //teststate.print();
         }
     }
 }
