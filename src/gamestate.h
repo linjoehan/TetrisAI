@@ -41,6 +41,7 @@ class Gamestate
     std::vector<Move> get_valid_moves();
     void print();
     void clear_board();
+    int count_filled_cells();
     
     int current_block_number;
     int next_block_number;

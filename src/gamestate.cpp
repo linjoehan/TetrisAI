@@ -290,3 +290,19 @@ void Gamestate::clear_board()
         }
     }
 }
+
+int Gamestate::count_filled_cells()
+{
+    int res = 0;
+    for(int row = 0;row<25;row++)
+    {
+        for(int col = 0;col<10;col++)
+        {
+            if(board[row][col] == '#')
+            {
+                res++;
+            }
+        }
+    }
+    return res;
+}

@@ -13,7 +13,9 @@ Tetris_Player::Tetris_Player()
   player_active(true),
   game_over(true),
   action_required(false),
-  starting_column{{3,5,3,5},{4,4,4,4},{4,4,4,5},{4,4,4,5},{4,4,4,5},{4,5,4,4},{4,5,4,4}}
+  starting_column{{3,5,3,5},{4,4,4,4},{4,4,4,5},{4,4,4,5},{4,4,4,5},{4,5,4,4},{4,5,4,4}},
+  base_lines{0,10,20,30,40,50,60,70,80,90,90,90,90,90,90,90,100,110,120,130},
+  line_score{0,40,100,300,1200}
 {
 }
 
@@ -36,6 +38,13 @@ void Tetris_Player::init() //gets the game to the level select screen
 
 void Tetris_Player::play(int level)
 {
+    //Check that level is a level and default it if needed
+    if(level < 0 or level > 19)
+    {
+        std::cerr << "Starting level cannot be set to " << level << " setting level to 0" << std::endl;
+        level = 0;
+    }
+    
     start_level = level;
     start_game();
     
@@ -44,6 +53,8 @@ void Tetris_Player::play(int level)
         get_gamestate();
         if(action_required)
         {
+            update_current_game_score();
+            
             Move move = gamestate_ai.get_best_move(gamestate);
             Move current_move = Move(0,starting_column[gamestate.current_block_number][move.rotation]);
             
@@ -97,11 +108,11 @@ void Tetris_Player::play(int level)
     if(player_active)
     {
         Sleep(20000);
-        std::cout << game_over_screen();
+        game_over_screen();
         Sleep(500);
-        std::cout << victory_screen();
+        victory_screen();
         Sleep(500);
-        std::cout << high_score_screen();
+        high_score_screen();
         Sleep(500);
         
         reset_to_start();
@@ -130,6 +141,9 @@ void Tetris_Player::start_game()
     }
     
     //set game over state to false
+    current_game_lines = 0;
+    current_game_score = 0;
+    prev_gamestate = Gamestate();
     game_over = false;
 }
 
@@ -423,4 +437,25 @@ void Tetris_Player::reset_to_start()
     
     
     Sleep(500);
+}
+
+void Tetris_Player::update_current_game_score()
+{
+    //count_filled between current and previous game state
+    int prev_filled = prev_gamestate.count_filled_cells();
+    int current_filled = gamestate.count_filled_cells();
+    
+    int lines_added = (prev_filled + 4 - current_filled) / 10;
+    current_game_lines += lines_added;
+    
+    int levels_added = std::max( (current_game_lines - base_lines[start_level]) / 10 , 0);
+    int current_level = start_level + levels_added;
+    
+    current_game_score += (current_level + 1) * line_score[lines_added];
+    
+    std::cout << "Lines:" << current_game_lines << std::endl
+              << "Level:" << current_level << std::endl
+              << "Score:" << current_game_score << std::endl;
+              
+    prev_gamestate = gamestate;
 }
