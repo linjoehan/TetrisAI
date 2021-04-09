@@ -28,12 +28,11 @@ class Tetris_Player
     
     Tetris_Player();
     void init();
-    void start_level_zero();
-    void start_level_eighteen();
     void get_gamestate();
-    void play();
+    void play(int level);
     
     //private:
+    int start_level;
     bool game_over;
     int starting_column[7][4];
     void press_button(uint8_t a);
@@ -42,6 +41,8 @@ class Tetris_Player
     void search_current_block();
     void check_game_over();
     Pixel get_pixel(int row,int col);
+    
+    void start_game();
     
     bool high_score_screen();
     bool victory_screen();

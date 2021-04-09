@@ -34,8 +34,11 @@ void Tetris_Player::init() //gets the game to the level select screen
     press_button(0b00000100);
 }
 
-void Tetris_Player::play()
+void Tetris_Player::play(int level)
 {
+    start_level = level;
+    start_game();
+    
     while(player_active and !game_over)
     {
         get_gamestate();
@@ -105,27 +108,28 @@ void Tetris_Player::play()
     }
 }
 
-void Tetris_Player::start_level_zero()
+void Tetris_Player::start_game()
 {
-    //Start
-    press_button(0b00000100);
+    for(int i = 0;i<start_level%10;i++)
+    {
+        //move up one level in menu
+        press_button(0b00010000);
+    }
     
-    game_over = false;
-}
-
-void Tetris_Player::start_level_eighteen()
-{
-    //select level
-    press_button(0b00010000);
-    press_button(0b00010000);
-    press_button(0b00010000);
-    press_button(0b01000000);
+    if(start_level > 10)
+    {
+        //Start with +10
+        jnes_interface.update_joystick(0b00000010);
+        jnes_interface.update_joystick(0b00000110);
+        jnes_interface.update_joystick(0b00000000);
+    }
+    else
+    {
+        //Start
+        press_button(0b00000100);
+    }
     
-    //Start with +10
-    jnes_interface.update_joystick(0b00000010);
-    jnes_interface.update_joystick(0b00000110);
-    jnes_interface.update_joystick(0b00000000);
-    
+    //set game over state to false
     game_over = false;
 }
 

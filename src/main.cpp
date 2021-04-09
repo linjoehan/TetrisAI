@@ -14,9 +14,7 @@ int main()
     
     while(player.player_active)
     {
-        player.start_level_eighteen();
-        //player.start_level_zero();
-        player.play();
+        player.play(18);
     }
     
     std::cin.get();
