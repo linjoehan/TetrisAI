@@ -2,6 +2,7 @@
 #define TETRIS_PLAYER_H
 
 #include <iostream>
+#include <time.h> 
 
 #include "jnes_interface.h"
 #include "gamestate.h"
@@ -33,6 +34,7 @@ class Tetris_Player
     void play();
     
     //private:
+    bool game_over;
     int starting_column[7][4];
     void press_button(uint8_t a);
     void fill_state_from_image();
@@ -40,6 +42,11 @@ class Tetris_Player
     void search_current_block();
     void check_game_over();
     Pixel get_pixel(int row,int col);
+    
+    bool high_score_screen();
+    bool victory_screen();
+    bool game_over_screen();
+    void reset_to_start();
 };
 
 

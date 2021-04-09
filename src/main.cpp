@@ -11,9 +11,13 @@ int main()
 {
     Tetris_Player player;
     player.init();
-    player.start_level_eighteen();
-    //player.start_level_zero();
-    player.play();
+    
+    while(player.player_active)
+    {
+        player.start_level_eighteen();
+        //player.start_level_zero();
+        player.play();
+    }
     
     std::cin.get();
 }
