@@ -67,7 +67,7 @@ double Gamestate_ai::eval(Gamestate gamestate)
         aggregate_height += height[i];
     }
     
-    int lines = gamestate.lines;
+    int lines = gamestate.get_total_lines();
     
     int holes = 0;
     for(int row = 0;row<25;row++)

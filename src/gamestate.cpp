@@ -65,13 +65,22 @@ bool Block::operator==(Block &test)
     }
     return res;
 }
-    
+
 Gamestate::Gamestate()
 {
+    Gamestate(0);
+}
+
+Gamestate::Gamestate(int start_level)
+: base_lines{0,10,20,30,40,50,60,70,80,90,90,90,90,90,90,90,100,110,120,130},
+  lines{0,0,0,0,0},
+  line_score{0,40,100,300,1200},
+  score(0)
+{
+    this->start_level = start_level;
     game_over = false;
     srand(time(0));
     
-    lines = 0;
     for(int row = 0;row<25;row++)
     {
         for(int col = 0;col<10;col++)
@@ -240,6 +249,7 @@ void Gamestate::make_move(Move move)
     }
     
     //count and remove filled lines
+    int line_buffer = 0;
     for(int row = 0;row<25;row++)
     {
         bool filled = true;
@@ -252,7 +262,7 @@ void Gamestate::make_move(Move move)
         }
         if(filled)
         {
-            lines++;
+            line_buffer++;
             for(int back_row = row;back_row>0;back_row--)
             {
                 for(int col = 0;col<10;col++)
@@ -262,6 +272,7 @@ void Gamestate::make_move(Move move)
             }
         }
     }
+    add_lines(line_buffer);
     
     //update current and next pieces
     current_block_number = next_block_number;
@@ -303,6 +314,29 @@ int Gamestate::count_filled_cells()
                 res++;
             }
         }
+    }
+    return res;
+}
+
+void Gamestate::add_lines(int added_lines)
+{
+    lines[added_lines]++;
+    int current_level = get_current_level();
+    score += (current_level + 1) * line_score[added_lines];
+}
+
+int Gamestate::get_current_level()
+{
+    int levels_added = std::max( (get_total_lines() - base_lines[start_level]) / 10 , 0);
+    return start_level + levels_added;
+}
+
+int Gamestate::get_total_lines()
+{
+    int res = 0;
+    for(int i = 0;i<5;i++)
+    {
+        res += i*lines[i];
     }
     return res;
 }

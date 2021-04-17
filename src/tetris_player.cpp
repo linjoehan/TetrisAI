@@ -13,9 +13,7 @@ Tetris_Player::Tetris_Player()
   player_active(true),
   game_over(true),
   action_required(false),
-  starting_column{{3,5,3,5},{4,4,4,4},{4,4,4,5},{4,4,4,5},{4,4,4,5},{4,5,4,4},{4,5,4,4}},
-  base_lines{0,10,20,30,40,50,60,70,80,90,90,90,90,90,90,90,100,110,120,130},
-  line_score{0,40,100,300,1200}
+  starting_column{{3,5,3,5},{4,4,4,4},{4,4,4,5},{4,4,4,5},{4,4,4,5},{4,5,4,4},{4,5,4,4}}
 {
 }
 
@@ -141,9 +139,8 @@ void Tetris_Player::start_game()
     }
     
     //set game over state to false
-    current_game_lines = 0;
-    current_game_score = 0;
-    prev_gamestate = Gamestate();
+    gamestate = Gamestate(start_level);
+    prev_gamestate = gamestate;
     game_over = false;
 }
 
@@ -273,7 +270,7 @@ void Tetris_Player::search_current_block()
     }
 }
 
-void Tetris_Player::check_game_over()
+void Tetris_Player::check_game_over() //uses it's own method to check onscreen for game over status and does not depend on the gameover status in the gamestate object
 {
     bool is_game_over = true;
     for(int col = 0;col<10 and is_game_over;col++)
@@ -446,16 +443,7 @@ void Tetris_Player::update_current_game_score()
     int current_filled = gamestate.count_filled_cells();
     
     int lines_added = (prev_filled + 4 - current_filled) / 10;
-    current_game_lines += lines_added;
-    
-    int levels_added = std::max( (current_game_lines - base_lines[start_level]) / 10 , 0);
-    int current_level = start_level + levels_added;
-    
-    current_game_score += (current_level + 1) * line_score[lines_added];
-    
-    std::cout << "Lines:" << current_game_lines << std::endl
-              << "Level:" << current_level << std::endl
-              << "Score:" << current_game_score << std::endl;
+    gamestate.add_lines(lines_added);
               
     prev_gamestate = gamestate;
 }
