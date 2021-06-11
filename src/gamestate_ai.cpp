@@ -1,7 +1,11 @@
 #include "gamestate_ai.h"
 
-Gamestate_ai::Gamestate_ai()
+Gamestate_ai::Gamestate_ai() :
+coefficients_size(4)
 {
+    //default values for coefficients
+    std::vector<double> init_coefficients = {-0.510066 , 0.760666 , -0.35663 , -0.184483};
+    update_coefficients(init_coefficients);
 }
 
 Move Gamestate_ai::get_best_move(Gamestate gamestate)
@@ -11,6 +15,29 @@ Move Gamestate_ai::get_best_move(Gamestate gamestate)
     
     dfs_search(gamestate,2,{},best_move,best_score);
     return best_move;
+}
+
+void Gamestate_ai::update_coefficients(std::vector<double> copy)
+{
+    //Warning messages when copy has the wrong size
+    if(copy.size() < coefficients_size)
+    {
+        std::cerr << "WARN: Coefficients vector received is to small: received a vector of size " << copy.size() << " expected " << coefficients_size << " filling to required size with zeros" << std::endl;
+    }
+    if(copy.size() > coefficients_size)
+    {
+        std::cerr << "WARN: Coefficients vector received is to large: received a vector of size " << copy.size() << " expected " << coefficients_size << " ignoring the extra values received" << std::endl;
+    }
+    
+    coefficients.clear();
+    for(unsigned i = 0;i < std::min(copy.size(),coefficients_size);i++)
+    {
+        coefficients.push_back(copy[i]);
+    }
+    while(coefficients.size()<coefficients_size)
+    {
+        coefficients.push_back(0);
+    }
 }
 
 void Gamestate_ai::dfs_search(Gamestate gamestate, int depth, std::vector<Move> moves, Move &best_move,double &best_score)
@@ -91,6 +118,10 @@ double Gamestate_ai::eval(Gamestate gamestate)
         bumpiness += abs(height[i] - height[i-1]);
     }
     
-    double score = -0.510066 * aggregate_height  + 0.760666 * lines -0.35663 * holes -0.184483 * bumpiness;
+    double score = coefficients[0] * aggregate_height 
+                 + coefficients[1] * lines 
+                 + coefficients[2] * holes 
+                 + coefficients[3] * bumpiness;
+    
     return score;
 }
