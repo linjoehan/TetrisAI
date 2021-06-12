@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "gamestate.h"
+#include "coefficient_db.h"
 
 class Gamestate_ai
 {
@@ -12,8 +13,9 @@ class Gamestate_ai
     void update_coefficients(std::vector<double> copy);
     
     private:
-    unsigned coefficients_size;
     std::vector<double> coefficients;
+    Coefficient_db coefficient_db;
+    
     
     void dfs_search(Gamestate gamestate, int depth, std::vector<Move> moves, Move &best_move,double &best_score);
     double eval(Gamestate gamestate);

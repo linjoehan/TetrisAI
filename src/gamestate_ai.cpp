@@ -1,11 +1,8 @@
 #include "gamestate_ai.h"
 
-Gamestate_ai::Gamestate_ai() :
-coefficients_size(4)
+Gamestate_ai::Gamestate_ai()
 {
-    //default values for coefficients
-    std::vector<double> init_coefficients = {-0.510066 , 0.760666 , -0.35663 , -0.184483};
-    update_coefficients(init_coefficients);
+    coefficients = coefficient_db.get_default();
 }
 
 Move Gamestate_ai::get_best_move(Gamestate gamestate)
@@ -20,21 +17,21 @@ Move Gamestate_ai::get_best_move(Gamestate gamestate)
 void Gamestate_ai::update_coefficients(std::vector<double> copy)
 {
     //Warning messages when copy has the wrong size
-    if(copy.size() < coefficients_size)
+    if(copy.size() < coefficient_db.coefficients_size)
     {
-        std::cerr << "WARN: Coefficients vector received is to small: received a vector of size " << copy.size() << " expected " << coefficients_size << " filling to required size with zeros" << std::endl;
+        std::cerr << "WARN: Coefficients vector received is to small: received a vector of size " << copy.size() << " expected " << coefficient_db.coefficients_size << " filling to required size with zeros" << std::endl;
     }
-    if(copy.size() > coefficients_size)
+    if(copy.size() > coefficient_db.coefficients_size)
     {
-        std::cerr << "WARN: Coefficients vector received is to large: received a vector of size " << copy.size() << " expected " << coefficients_size << " ignoring the extra values received" << std::endl;
+        std::cerr << "WARN: Coefficients vector received is to large: received a vector of size " << copy.size() << " expected " << coefficient_db.coefficients_size << " ignoring the extra values received" << std::endl;
     }
     
     coefficients.clear();
-    for(unsigned i = 0;i < std::min(copy.size(),coefficients_size);i++)
+    for(unsigned i = 0;i < std::min(copy.size(),coefficient_db.coefficients_size);i++)
     {
         coefficients.push_back(copy[i]);
     }
-    while(coefficients.size()<coefficients_size)
+    while(coefficients.size()<coefficient_db.coefficients_size)
     {
         coefficients.push_back(0);
     }

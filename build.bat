@@ -7,6 +7,7 @@ g++.exe ^
 ./src/gamestate_ai.cpp ^
 ./src/jnes_interface.cpp ^
 ./src/tetris_player.cpp ^
+./src/coefficient_db.cpp ^
 -static-libgcc ^
 -static-libstdc++ ^
 -lgdi32 ^
