@@ -70,9 +70,7 @@ void Gamestate_ai::dfs_search(Gamestate gamestate, int depth, std::vector<Move> 
 
 double Gamestate_ai::eval(Gamestate gamestate)
 {
-    //evaluation based on https://codemyroad.wordpress.com/2013/04/14/tetris-ai-the-near-perfect-player/
-    
-    //total height
+    //get height for each column
     int height[10] = {0};
     for(int row = 0;row<25;row++)
     {
@@ -85,13 +83,20 @@ double Gamestate_ai::eval(Gamestate gamestate)
         }
     }
     
+    int rightlane_height = height[9];
+    int max_height = 0;
     int aggregate_height = 0;
     for(int i = 0;i<10;i++)
     {
         aggregate_height += height[i];
+        max_height = std::max(max_height , height[i]);
     }
     
-    int lines = gamestate.get_total_lines();
+    int lines_total = gamestate.get_total_lines();
+    int lines_single = gamestate.lines[1];
+    int lines_double = gamestate.lines[2];
+    int lines_triple = gamestate.lines[3];
+    int lines_tetris = gamestate.lines[4];
     
     int holes = 0;
     for(int row = 0;row<25;row++)
@@ -109,16 +114,41 @@ double Gamestate_ai::eval(Gamestate gamestate)
         }
     }
     
+    int blocks_above_holes = 0;
+    for(int col = 0;col<10;col++)
+    {
+        int blocks_counted = 0;
+        for(int row = 0;row<25;row++)
+        {
+            if(gamestate.board[row][col] == '#')
+            {
+                blocks_counted++;
+            }
+            else
+            {
+                blocks_above_holes += blocks_counted;
+            }
+        }
+    }
+    
     int bumpiness = 0;
     for(int i = 1;i<10;i++)
     {
         bumpiness += abs(height[i] - height[i-1]);
     }
     
-    double score = coefficients[0] * aggregate_height 
-                 + coefficients[1] * lines 
-                 + coefficients[2] * holes 
-                 + coefficients[3] * bumpiness;
-    
+    double score = coefficients[0] * max_height
+                 + coefficients[1] * aggregate_height
+                 + coefficients[2] * rightlane_height
+                 + coefficients[3] * bumpiness
+                 + coefficients[4] * holes
+                 + coefficients[5] * blocks_above_holes
+                 + coefficients[6] * lines_total
+                 + coefficients[7] * lines_single
+                 + coefficients[8] * lines_double
+                 + coefficients[9] * lines_triple
+                 + coefficients[10] * lines_tetris;
+                 
     return score;
+    
 }

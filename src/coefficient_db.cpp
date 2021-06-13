@@ -1,7 +1,7 @@
 #include "coefficient_db.h"
 
 Coefficient_db::Coefficient_db():
-coefficients_size(4)
+coefficients_size(11)
 {
     
 }
