@@ -53,6 +53,7 @@ const int max_step_value = 20; //percentage of maximum change in mutation step
 
 int main()
 {
+    int generation = 0;
     //Get population of 10 player attributes by randomly generating them or getting the latest one from the database
     std::vector<Player_attributes> player_attributes(population_size);
     //fill player attributes from database
@@ -76,6 +77,8 @@ int main()
     
     while(player.player_active)
     {
+        generation++;
+        std::cout << "Generation: " << generation <<std::endl;
         //write to DB the current values of player attributes
         {
             std::vector<std::vector<double>> write_data;
@@ -132,6 +135,7 @@ int main()
                 next_generation.push_back(next_player);
             }
             
+            //scale the next generation so that the max coefficient value is 1
             for(unsigned i =0;i<next_generation.size();i++)
             {
                 next_generation[i].scale();
