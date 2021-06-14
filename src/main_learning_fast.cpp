@@ -194,6 +194,19 @@ int main()
         {
             player_attributes[i].print();
         }
+        
+        //write some data to file
+        std::fstream data_file;
+        data_file.open("../coefficient_db/learning_fast_data.txt",std::ios::out | std::ios::app);
+        if(data_file.is_open())
+        {
+            for(int i = 0;i<10;i++)
+            {
+                data_file << (i==0?"":",")<<player_attributes[i].score;
+            }
+            data_file << std::endl;
+        }
+        data_file.close();
     }
     
     std::cin.get();
