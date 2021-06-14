@@ -144,7 +144,7 @@ double Gamestate_ai::eval(Gamestate gamestate)
                  - coefficients[3] * bumpiness
                  - coefficients[4] * holes
                  - coefficients[5] * blocks_above_holes
-                 - coefficients[6] * lines_total
+                 + coefficients[6] * lines_total
                  - coefficients[7] * lines_single
                  - coefficients[8] * lines_double
                  - coefficients[9] * lines_triple
