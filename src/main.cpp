@@ -1,11 +1,4 @@
-#include <iostream>
-#include <fstream>
-
-//#include "gamestate.h"
-//#include "gamestate_ai.h"
-//#include "jnes_interface.h"
 #include "tetris_player.h"
-
 
 int main()
 {
@@ -19,4 +12,3 @@ int main()
     
     std::cin.get();
 }
-
