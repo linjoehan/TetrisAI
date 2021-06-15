@@ -211,6 +211,10 @@ int main()
             {
                 data_file << (i==0?"":",")<<player_attributes[i].score;
             }
+            for(int i = 0;i<player_attributes[0].coefficients.size();i++)
+            {
+                data_file << "," << player_attributes[0].coefficients[i];
+            }
             data_file << std::endl;
         }
         data_file.close();
