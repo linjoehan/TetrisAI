@@ -144,7 +144,7 @@ int main()
         {
             std::cout << "Game: " << player_number + 1 << " of " << population_size << std::endl;
             
-            for(int game_number = 0;game_number<3;game_number++)
+            for(int game_number = 0;game_number<1;game_number++)
             {
                 Gamestate_ai gamestate_ai;
                 gamestate_ai.update_coefficients(player_attributes[player_number].coefficients);
