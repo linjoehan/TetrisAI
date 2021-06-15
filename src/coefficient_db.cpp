@@ -40,7 +40,7 @@ std::vector<double> Coefficient_db::get_default()
     //fill result vector with zeros if required
     while(res.size()<coefficients_size)
     {
-        res.push_back(1);
+        res.push_back(0);
     }
     
     default_file.close();
@@ -99,7 +99,7 @@ std::vector<std::vector<double>> Coefficient_db::get_learning()
             
             while(res_part.size() < coefficients_size)
             {
-                res_part.push_back(1);
+                res_part.push_back(0);
             }
             
             res.push_back(res_part);
@@ -112,7 +112,7 @@ std::vector<std::vector<double>> Coefficient_db::get_learning()
         std::vector<double> res_part;
         while(res_part.size() < coefficients_size)
         {
-            res_part.push_back(1);
+            res_part.push_back(0);
         }
         res.push_back(res_part);
     }
@@ -178,7 +178,7 @@ std::vector<std::vector<double>> Coefficient_db::get_learning_fast()
             
             while(res_part.size() < coefficients_size)
             {
-                res_part.push_back(1);
+                res_part.push_back(0);
             }
             
             res.push_back(res_part);
@@ -191,7 +191,7 @@ std::vector<std::vector<double>> Coefficient_db::get_learning_fast()
         std::vector<double> res_part;
         while(res_part.size() < coefficients_size)
         {
-            res_part.push_back(1);
+            res_part.push_back(0);
         }
         res.push_back(res_part);
     }

@@ -137,16 +137,16 @@ double Gamestate_ai::eval(Gamestate gamestate)
     }
     
     double score = 0
-                 + (coefficients[0] - 0.5) * max_height
-                 + (coefficients[1] - 0.5) * aggregate_height
-                 + (coefficients[2] - 0.5) * rightlane_height
-                 + (coefficients[3] - 0.5) * bumpiness
-                 + (coefficients[4] - 0.5) * holes
-                 + (coefficients[5] - 0.5) * blocks_above_holes
-                 + (coefficients[6] - 0.5) * lines_single
-                 + (coefficients[7] - 0.5) * lines_double
-                 + (coefficients[8] - 0.5) * lines_triple
-                 + (coefficients[9] - 0.5) * lines_tetris;
+                 + coefficients[0] * max_height
+                 + coefficients[1] * aggregate_height
+                 + coefficients[2] * rightlane_height
+                 + coefficients[3] * bumpiness
+                 + coefficients[4] * holes
+                 + coefficients[5] * blocks_above_holes
+                 + coefficients[6] * lines_single
+                 + coefficients[7] * lines_double
+                 + coefficients[8] * lines_triple
+                 + coefficients[9] * lines_tetris;
                  
     return score;
     
