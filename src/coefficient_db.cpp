@@ -2,7 +2,7 @@
 
 Coefficient_db::Coefficient_db()
 :
-  coefficients_size(11),
+  coefficients_size(10),
   learning_population(10),
   learning_fast_population(100)
 {
