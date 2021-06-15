@@ -2,6 +2,7 @@
 #include <vector>
 #include <algorithm>
 #include <stdlib.h>
+#include <time.h>
 
 #include "gamestate.h"
 #include "gamestate_ai.h"
@@ -79,7 +80,7 @@ int main()
     while(true)
     {
         generation++;
-        std::cout << "Generation: " << generation <<std::endl;
+        std::cout << "Generation: " << generation << " " << "Time:" << (clock() / CLOCKS_PER_SEC) << std::endl;
         //write to DB the current values of player attributes
         {
             std::vector<std::vector<double>> write_data;
@@ -143,45 +144,51 @@ int main()
         {
             std::cout << "Game: " << player_number + 1 << " of " << population_size << std::endl;
             
-            Gamestate_ai gamestate_ai;
-            gamestate_ai.update_coefficients(player_attributes[player_number].coefficients);
-            Gamestate gamestate = Gamestate(18);
-            
-            bool game_over = false;
-            while(game_over == false)
+            for(int game_number = 0;game_number<3;game_number++)
             {
-                Move move = gamestate_ai.get_best_move(gamestate);
-                gamestate.make_move(move);
+                Gamestate_ai gamestate_ai;
+                gamestate_ai.update_coefficients(player_attributes[player_number].coefficients);
+                Gamestate gamestate = Gamestate(18);
                 
-                //check gamestate level
-                if(gamestate.get_current_level() >28)
+                bool game_over = false;
+                while(game_over == false)
                 {
-                    game_over = true;
-                }
-                
-                //check gamestate height
-                {
-                    int max_height = 0;
-                    int height[10] = {0};
-                    for(int row = 0;row<25;row++)
-                    {
-                        for(int col = 0;col<10;col++)
-                        {
-                            if(gamestate.board[row][col] == '#')
-                            {
-                                max_height = std::max(max_height, 24 - row);
-                            }
-                        }
-                    }
+                    Move move = gamestate_ai.get_best_move(gamestate);
+                    gamestate.make_move(move);
                     
-                    if(max_height >= 10)
+                    //check gamestate level
+                    if(gamestate.get_current_level() >28)
                     {
                         game_over = true;
                     }
+                    
+                    //check gamestate height
+                    {
+                        int max_height = 0;
+                        int height[10] = {0};
+                        for(int row = 0;row<25;row++)
+                        {
+                            for(int col = 0;col<10;col++)
+                            {
+                                if(gamestate.board[row][col] == '#')
+                                {
+                                    max_height = std::max(max_height, 24 - row);
+                                }
+                            }
+                        }
+                        
+                        if(max_height >= 10)
+                        {
+                            game_over = true;
+                        }
+                    }
                 }
+                
+                player_attributes[player_number].score = std::max(player_attributes[player_number].score,gamestate.score);
+                std::cout << (game_number==0 ? "":" ") << gamestate.score;
             }
+            std::cout << std::endl;
             
-            player_attributes[player_number].score = gamestate.score;
             player_attributes[player_number].print();
         }
             
