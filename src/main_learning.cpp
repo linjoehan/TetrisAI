@@ -230,6 +230,7 @@ int main()
                     player_attributes[player_number].score = std::max(player_attributes[player_number].score,gamestate.score);
                     std::cout << (game_number==0 ? "":" ") << gamestate.score;
                 }
+                std::cout << std::endl;
             }
             player_attributes[player_number].print();
         }
@@ -253,7 +254,6 @@ int main()
             if(run_option==1)
             {
                 data_file.open("../coefficient_db/learning_data.txt",std::ios::out | std::ios::app);
-                std::cout << "Writing data" << std::endl;
             }
             else if(run_option==2)
             {
