@@ -51,7 +51,7 @@ bool player_attributes_sorter_greatest(Player_attributes a, Player_attributes b)
 }
 
 const int population_size = 100;
-const int max_step_value = 50; //percentage of maximum change in mutation step
+const int max_step_value = 20; //percentage of maximum change in mutation step
 
 int main()
 {
