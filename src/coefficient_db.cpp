@@ -24,7 +24,7 @@ std::vector<double> Coefficient_db::get_default()
         //warnings for when size of inputs and expected are different
         if(string_default.size() < coefficients_size)
         {
-            std::cerr << "WARN: Coefficients vector received is to small: received a vector of size " << string_default.size() << " expected " << coefficients_size << " filling to required size with zeros" << std::endl;
+            std::cerr << "WARN: Coefficients vector received is to small: received a vector of size " << string_default.size() << " expected " << coefficients_size << " filling to required size with ones" << std::endl;
         }
         if(string_default.size() > coefficients_size)
         {
@@ -40,7 +40,7 @@ std::vector<double> Coefficient_db::get_default()
     //fill result vector with zeros if required
     while(res.size()<coefficients_size)
     {
-        res.push_back(0);
+        res.push_back(1);
     }
     
     default_file.close();
