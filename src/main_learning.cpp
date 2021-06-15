@@ -23,7 +23,7 @@ class Player_attributes
     //set coefficients so that max is 1 and others are scales to it
     void scale()
     {
-        double max_coefficient = 0.0000000000001;
+        double max_coefficient = 1;
         for(unsigned i = 0;i<coefficients.size();i++)
         {
             max_coefficient = std::max( max_coefficient ,abs(coefficients[i]));
@@ -51,7 +51,7 @@ bool player_attributes_sorter_greatest(Player_attributes a, Player_attributes b)
     return a.score > b.score;
 }
 
-const double max_step_value = 0.2; //maximum change in mutation step
+const double max_step_value = 0.1; //maximum change in mutation step
 
 int main()
 {
