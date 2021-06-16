@@ -52,6 +52,7 @@ bool player_attributes_sorter_greatest(Player_attributes a, Player_attributes b)
 }
 
 const double max_step_value = 0.1; //maximum change in mutation step
+const int max_step_ratio = 0.1; //maximum step percentage
 
 int main()
 {
@@ -138,7 +139,7 @@ int main()
                     std::vector<double> mutate;
                     for(int j =0;j<player_attributes[base].coefficients.size();j++)
                     {
-                        mutate.push_back( player_attributes[base].coefficients[j] + max_step_value * (rand() * 2.0 / RAND_MAX - 1.0) );
+                        mutate.push_back( player_attributes[base].coefficients[j] + std::max(max_step_value , player_attributes[base].coefficients[j] * max_step_ratio)  * (rand() * 2.0 / RAND_MAX - 1.0) );
                     }
                     Player_attributes next_player;
                     next_player.coefficients = mutate;
@@ -157,12 +158,6 @@ int main()
                 Player_attributes next_player;
                 next_player.coefficients = cross_over;
                 next_generation.push_back(next_player);
-            }
-            
-            //scale the next generation so that the max coefficient value is 1
-            for(unsigned i =0;i<next_generation.size();i++)
-            {
-                next_generation[i].scale();
             }
             
             player_attributes = next_generation;
