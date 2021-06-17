@@ -136,17 +136,40 @@ double Gamestate_ai::eval(Gamestate gamestate)
         bumpiness += abs(height[i] - height[i-1]);
     }
     
+    std::vector<int> height_matrix(13,0);
+    if(max_height<13)
+    {
+        height_matrix[max_height] = 1;
+    }
+    else
+    {
+        height_matrix[12] = 1;
+    }
+    
     double score = 0
-                 + coefficients[0] * max_height
-                 + coefficients[1] * aggregate_height
-                 + coefficients[2] * rightlane_height
-                 + coefficients[3] * bumpiness
-                 + coefficients[4] * holes
-                 + coefficients[5] * blocks_above_holes
-                 + coefficients[6] * lines_single
-                 + coefficients[7] * lines_double
-                 + coefficients[8] * lines_triple
-                 + coefficients[9] * lines_tetris;
+                 + coefficients[0]  * height_matrix[0] 
+                 + coefficients[1]  * height_matrix[1] 
+                 + coefficients[2]  * height_matrix[2] 
+                 + coefficients[3]  * height_matrix[3] 
+                 + coefficients[4]  * height_matrix[4] 
+                 + coefficients[5]  * height_matrix[5] 
+                 + coefficients[6]  * height_matrix[6] 
+                 + coefficients[7]  * height_matrix[7] 
+                 + coefficients[8]  * height_matrix[8] 
+                 + coefficients[9]  * height_matrix[9] 
+                 + coefficients[10] * height_matrix[10]
+                 + coefficients[11] * height_matrix[11]
+                 + coefficients[12] * height_matrix[12]
+                 + coefficients[13] * max_height
+                 + coefficients[14] * aggregate_height
+                 + coefficients[15] * rightlane_height
+                 + coefficients[16] * bumpiness
+                 + coefficients[17] * holes
+                 + coefficients[18] * blocks_above_holes
+                 + coefficients[19] * lines_single
+                 + coefficients[20] * lines_double
+                 + coefficients[21] * lines_triple
+                 + coefficients[22] * lines_tetris;
                  
     return score;
     
