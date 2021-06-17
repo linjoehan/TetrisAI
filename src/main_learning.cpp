@@ -37,11 +37,6 @@ class Player_attributes
     void print()
     {
         std::cout << "Score: " << score;
-        std::cout << " Values: ";
-        for(unsigned i = 0;i<coefficients.size();i++)
-        {
-            std::cout << coefficients[i] << " ";
-        }
         std::cout << std::endl;
     }
 };
