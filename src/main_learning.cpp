@@ -209,7 +209,7 @@ int main()
                                 }
                             }
                             
-                            if(max_height > 12)
+                            if(max_height >= 10)
                             {
                                 game_over = true;
                             }

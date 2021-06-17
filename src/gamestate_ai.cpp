@@ -136,14 +136,14 @@ double Gamestate_ai::eval(Gamestate gamestate)
         bumpiness += abs(height[i] - height[i-1]);
     }
     
-    std::vector<int> height_matrix(13,0);
-    if(max_height<13)
+    std::vector<int> height_matrix(10,0);
+    if(max_height<10)
     {
         height_matrix[max_height] = 1;
     }
     else
     {
-        height_matrix[12] = 1;
+        height_matrix[9] = 1;
     }
     
     double score = 0
@@ -157,19 +157,16 @@ double Gamestate_ai::eval(Gamestate gamestate)
                  + coefficients[7]  * height_matrix[7] 
                  + coefficients[8]  * height_matrix[8] 
                  + coefficients[9]  * height_matrix[9] 
-                 + coefficients[10] * height_matrix[10]
-                 + coefficients[11] * height_matrix[11]
-                 + coefficients[12] * height_matrix[12]
-                 + coefficients[13] * max_height
-                 + coefficients[14] * aggregate_height
-                 + coefficients[15] * rightlane_height
-                 + coefficients[16] * bumpiness
-                 + coefficients[17] * holes
-                 + coefficients[18] * blocks_above_holes
-                 + coefficients[19] * lines_single
-                 + coefficients[20] * lines_double
-                 + coefficients[21] * lines_triple
-                 + coefficients[22] * lines_tetris;
+                 + coefficients[10] * max_height
+                 + coefficients[11] * aggregate_height
+                 + coefficients[12] * rightlane_height
+                 + coefficients[13] * bumpiness
+                 + coefficients[14] * holes
+                 + coefficients[15] * blocks_above_holes
+                 + coefficients[16] * lines_single
+                 + coefficients[17] * lines_double
+                 + coefficients[18] * lines_triple
+                 + coefficients[19] * lines_tetris;
                  
     return score;
     
