@@ -2,6 +2,8 @@ mkdir bin
 set PATH=C:\MinGW\bin;%PATH%
 
 g++.exe ^
+-Wall ^
+-O3 ^
 ./src/main.cpp ^
 ./src/gamestate.cpp ^
 ./src/gamestate_ai.cpp ^
@@ -11,11 +13,14 @@ g++.exe ^
 -static-libgcc ^
 -static-libstdc++ ^
 -lgdi32 ^
--o ./bin/run.exe
+-o ./bin/run.exe ^
+-s
 
 pause
 
 g++.exe ^
+-Wall ^
+-O3 ^
 ./src/main_learning.cpp ^
 ./src/gamestate.cpp ^
 ./src/gamestate_ai.cpp ^
@@ -25,6 +30,7 @@ g++.exe ^
 -static-libgcc ^
 -static-libstdc++ ^
 -lgdi32 ^
--o ./bin/run_learning.exe
+-o ./bin/run_learning.exe ^
+-s
 
 pause

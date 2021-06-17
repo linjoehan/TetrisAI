@@ -9,10 +9,10 @@ Pixel::Pixel()
 }
 
 Tetris_Player::Tetris_Player()
-: jnes_interface("../emu/Jnes/","../emu/Tetris (U) [!].zip"),
-  player_active(true),
-  game_over(true),
+: player_active(true),
   action_required(false),
+  jnes_interface("../emu/Jnes/","../emu/Tetris (U) [!].zip"),
+  game_over(true),
   starting_column{{3,5,3,5},{4,4,4,4},{4,4,4,5},{4,4,4,5},{4,4,4,5},{4,5,4,4},{4,5,4,4}}
 {
 }

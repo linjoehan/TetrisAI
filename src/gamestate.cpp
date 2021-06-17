@@ -2,8 +2,8 @@
 
 Move::Move()
 {
-    int rotation = 0;
-    int column = 0;
+    rotation = 0;
+    column = 0;
 }
 
 Move::Move(int rotation,int column)
@@ -72,10 +72,10 @@ Gamestate::Gamestate()
 }
 
 Gamestate::Gamestate(int start_level)
-: base_lines{0,10,20,30,40,50,60,70,80,90,90,90,90,90,90,90,100,110,120,130},
+: score(0),
   lines{0,0,0,0,0},
-  line_score{0,40,100,300,1200},
-  score(0)
+  base_lines{0,10,20,30,40,50,60,70,80,90,90,90,90,90,90,90,100,110,120,130},
+  line_score{0,40,100,300,1200}
 {
     this->start_level = start_level;
     game_over = false;

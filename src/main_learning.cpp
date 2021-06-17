@@ -67,7 +67,7 @@ int main()
         std::cin.ignore();
     }
     
-    int population_size = (run_option==1 ? 10 : 100);
+    unsigned population_size = (run_option==1 ? 10 : 100);
     
     int generation = 0;
     //Get population of 10 player attributes by randomly generating them or getting the latest one from the database
@@ -137,7 +137,7 @@ int main()
                 for(int i = 0;i<3;i++)
                 {
                     std::vector<double> mutate;
-                    for(int j =0;j<player_attributes[base].coefficients.size();j++)
+                    for(unsigned j =0;j<player_attributes[base].coefficients.size();j++)
                     {
                         mutate.push_back( player_attributes[base].coefficients[j] + std::max(max_step_value , player_attributes[base].coefficients[j] * max_step_ratio)  * (rand() * 2.0 / RAND_MAX - 1.0) );
                     }
@@ -151,7 +151,7 @@ int main()
             while(next_generation.size() < population_size)
             {
                 std::vector<double> cross_over;
-                for(int j =0;j<player_attributes[0].coefficients.size();j++)
+                for(unsigned j =0;j<player_attributes[0].coefficients.size();j++)
                 {
                     cross_over.push_back(player_attributes[rand()%carry_over].coefficients[j]);
                 }
@@ -203,7 +203,6 @@ int main()
                         //check gamestate height
                         {
                             int max_height = 0;
-                            int height[10] = {0};
                             for(int row = 0;row<25;row++)
                             {
                                 for(int col = 0;col<10;col++)
@@ -215,7 +214,7 @@ int main()
                                 }
                             }
                             
-                            if(max_height >= 10)
+                            if(max_height > 12)
                             {
                                 game_over = true;
                             }
@@ -261,7 +260,7 @@ int main()
                 {
                     data_file << (i==0?"":",")<<player_attributes[i].score;
                 }
-                for(int i = 0;i<player_attributes[0].coefficients.size();i++)
+                for(unsigned i = 0;i<player_attributes[0].coefficients.size();i++)
                 {
                     data_file << "," << player_attributes[0].coefficients[i];
                 }

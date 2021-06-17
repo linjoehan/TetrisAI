@@ -11,7 +11,7 @@ Joystick_state::Joystick_state(uint8_t bin_state)
 }
     
 Jnes_Interface::Jnes_Interface(std::string jnes_path,std::string jnes_rom)
-    : jnes_path(jnes_path), jnes_rom(jnes_rom)
+    :  jnes_path(jnes_path) , jnes_rom(jnes_rom)
 {
     current_joy_state = Joystick_state();
     screendata = 0;

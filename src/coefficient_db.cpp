@@ -129,9 +129,9 @@ void Coefficient_db::write_learning(std::vector<std::vector<double>> coefficient
     
     if(learning_file.is_open())
     {
-        for(int row = 0;row<coefficient_value_table.size();row++)
+        for(unsigned row = 0;row<coefficient_value_table.size();row++)
         {
-            for(int col = 0;col < coefficient_value_table[row].size();col++)
+            for(unsigned col = 0;col < coefficient_value_table[row].size();col++)
             {
                 learning_file << (col>0? " ":"") << std::fixed << std::setprecision(15) << coefficient_value_table[row][col];
             }
@@ -208,9 +208,9 @@ void Coefficient_db::write_learning_fast(std::vector<std::vector<double>> coeffi
     
     if(learning_file.is_open())
     {
-        for(int row = 0;row<coefficient_value_table.size();row++)
+        for(unsigned row = 0;row<coefficient_value_table.size();row++)
         {
-            for(int col = 0;col < coefficient_value_table[row].size();col++)
+            for(unsigned col = 0;col < coefficient_value_table[row].size();col++)
             {
                 learning_file << (col>0? " ":"") << std::fixed << std::setprecision(15) << coefficient_value_table[row][col];
             }
