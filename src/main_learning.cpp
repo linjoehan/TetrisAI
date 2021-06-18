@@ -177,7 +177,8 @@ int main()
             }
             else if(run_option == 2)
             {
-                for(int game_number = 0;game_number<1;game_number++)
+                int games_to_play = 5;
+                for(int game_number = 0;game_number<games_to_play;game_number++)
                 {
                     Gamestate_ai gamestate_ai;
                     gamestate_ai.update_coefficients(player_attributes[player_number].coefficients);
@@ -216,9 +217,10 @@ int main()
                         }
                     }
                     
-                    player_attributes[player_number].score = std::max(player_attributes[player_number].score,gamestate.score);
+                    player_attributes[player_number].score += gamestate.score;
                     std::cout << (game_number==0 ? "":" ") << gamestate.score;
                 }
+                player_attributes[player_number].score /= games_to_play;
                 std::cout << std::endl;
             }
             player_attributes[player_number].print();
