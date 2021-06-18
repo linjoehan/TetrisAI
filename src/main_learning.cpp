@@ -65,6 +65,33 @@ int main()
     unsigned population_size = (run_option==1 ? 10 : 100);
     
     int generation = 0;
+    
+    //set generation based on data log
+    {
+        std::string line;
+        std::fstream data_file;
+        if(run_option==1)
+        {
+            data_file.open("../coefficient_db/learning_data.txt",std::ios::in);
+        }
+        else if(run_option==2)
+        {
+            data_file.open("../coefficient_db/learning_fast_data.txt",std::ios::in);
+        }
+        
+        if(data_file.is_open())
+        {
+            while(getline(data_file,line))
+            {
+                if(line.size() > 10)
+                {
+                    generation++;
+                }
+            }
+        }
+        data_file.close();
+    }
+    
     //Get population of 10 player attributes by randomly generating them or getting the latest one from the database
     std::vector<Player_attributes> player_attributes(population_size);
     //fill player attributes from database
@@ -177,7 +204,7 @@ int main()
             }
             else if(run_option == 2)
             {
-                int games_to_play = 5;
+                int games_to_play = (generation < 500 ? 1 : 5) ;
                 for(int game_number = 0;game_number<games_to_play;game_number++)
                 {
                     Gamestate_ai gamestate_ai;
